@@ -50,7 +50,7 @@ void binarysearch( int numbers[] , int to_search_for, int start , int last)
     
 }
 
-void binarysearch2( vector<int> &numbers , int to_search_for, int start , int last)
+void binarysearch2( vector<int> &numbers , int to_search_for, int start , int last, int min)
 {
     
     //cout << "Function called" << " Start is " << start << " End is " << last << " Number is " << to_search_for << endl;
@@ -65,17 +65,18 @@ void binarysearch2( vector<int> &numbers , int to_search_for, int start , int la
     else if (mid == start || mid == last)
     {
         cout << "NOT FOUND" <<endl;
-        numbers.insert(numbers.begin()+mid,to_search_for);
-        
+        if (to_search_for < numbers.at(0)) numbers.insert(numbers.begin(),to_search_for);
+        else numbers.insert(numbers.begin()+min,to_search_for);
         
     }
     else if (numbers.at(mid) < to_search_for)
     {
-        binarysearch2(numbers,to_search_for,mid,last);
+        binarysearch2(numbers,to_search_for,mid,last,min);
     }
     else if (numbers.at(mid) > to_search_for )
     {
-        binarysearch2(numbers,to_search_for,start,mid);
+        min = mid;
+        binarysearch2(numbers,to_search_for,start,mid,min);
     }
    
     
@@ -86,11 +87,11 @@ int main(int argc, char** argv) {
     
     int numbers [] = {2,8,23,44,56,88,90,767,999,1002};
     vector<int>  num (numbers, numbers+10) ;
-    int to_search_for = 0 , last_idx=10;
+    int to_search_for = 0 , min_idx=10;
     cout << "Please enter a number to search for" <<endl;
     cin >> to_search_for;
     //binarysearch(numbers,to_search_for,0 , 10);
-    binarysearch2(num,to_search_for,0 , 10);
+    binarysearch2(num,to_search_for,0 , 10 , min_idx);
     
     for (int i = 0 ; i < num.size() ; i++)
         {
